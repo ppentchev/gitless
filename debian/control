@@ -1,0 +1,34 @@
+Source: gitless
+Section: devel
+Priority: optional
+Maintainer: Peter Pentchev <roam@ringlet.net>
+Build-Depends:
+ debhelper (>> 10),
+ dh-python,
+ git,
+ python3-all,
+ python3-setuptools,
+ python3-clint (>= 0.3.6),
+ python3-pygit2 (>= 0.23.0),
+ python3-sh (>= 1.11)
+Standards-Version: 3.9.8
+X-Python3-Version: >= 3.2
+Homepage: http://gitless.com/
+Vcs-Git: https://github.com/ppentchev/gitless.git -b debian
+Vcs-Browser: https://github.com/ppentchev/gitless/tree/debian
+#Testsuite: autopkgtest
+
+Package: gitless
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, git
+Multi-Arch: foreign
+Description: version control system on top of Git
+ Gitless is an experimental version control system built on top of Git.
+ Many people complain that Git is hard to use.  We think the problem lies
+ deeper than the user interface, in the concepts underlying Git.
+ Gitless is an experiment to see what happens if you put a simple veneer on
+ an app that changes the underlying concepts.  Because Gitless is
+ implemented on top of Git (could be considered what Git pros call
+ a "porcelain" of Git), you can always fall back on Git. And of course
+ your coworkers you share a repo with need never know that you're not
+ a Git aficionado.

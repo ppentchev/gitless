@@ -1,0 +1,13 @@
+Description: Use Python 3 for the gl command-line utility.
+Forwarded: not-needed
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2016-10-04
+
+--- a/gl.py
++++ b/gl.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ # Gitless - a version control system built on top of Git.
+ # Licensed under GNU GPL v2.

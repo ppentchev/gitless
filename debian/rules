@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=tox
+
+PYTHON3=$(shell py3versions -d)
+
+%:
+	dh '$@' --with=python3 --buildsystem=pybuild
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf .eggs
+	rm -rf gitless.egg-info
+
+override_dh_auto_test:
+	# One of these days I will figure out why the upstream test suite
+	# fails in a sbuild schroot, even with some customizations.
+	#ln -s gl.py gl
+	#env PATH="${CURDIR}:$$PATH" LC_ALL="C.UTF-8" dh_auto_test -- --before-test "cp -v '${CURDIR}/debian/test-home/.gitconfig' '{home_dir}/'; ls -A '{home_dir}'"
+	dir=`mktemp -d -t gitless-test.XXXXXX`; echo "Using directory $$dir"; rc=0; env HOME='${CURDIR}/debian/test-home' LC_ALL=C.UTF-8 ./debian/test-gl-simple "$$dir" || rc="$$?"; rm -rf -- "$$dir"; exit "$$rc"

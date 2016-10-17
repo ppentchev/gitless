@@ -1,0 +1,9 @@
+[user]
+name = Kieron Latimer
+email = dragonchaser@example.com
+
+[color]
+ui = false
+
+[core]
+pager = cat

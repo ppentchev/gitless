@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -e
+
+set -x
+
+if [ "$#" -ne 1 ]; then
+	echo 'Usage: test-gl-simple dirname' 1>&2
+	echo '(the directory will be created)' 1>&2
+	exit 1
+fi
+dir="$1"
+
+: ${PYTHON3:=python3}
+: ${GIT:=git}
+: ${GITLESS:=$(pwd)/gl.py}
+
+gl="${PYTHON3} ${GITLESS}"
+
+[ -d "$dir" ] || mkdir -- "$dir"
+cd "$dir"
+
+$gl init
+
+echo 'This is a test.' > file1
+$gl track file1
+$GIT ls-files -v --full-name file1
+$GIT status --short
+
+echo 'This is only a test.' >> file1
+$GIT status --short
+if $gl track file1; then false; else true; fi
+$GIT status --short
+
+if $gl track non-existent; then false; else true; fi
+$GIT status --short
+
+$gl untrack file1
+$GIT ls-files -v --full-name file1
+$GIT status --short
+
+$gl track file1
+$GIT ls-files -v --full-name file1
+$GIT status --short
+
+$gl commit -m 'file1 commit'
+$GIT status --short
+
+if $gl commit -m 'nothing to commit'; then false; else true; fi
+$GIT status --short
+
+$gl history
