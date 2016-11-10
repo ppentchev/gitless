@@ -8,8 +8,8 @@ Build-Depends:
  git,
  python3-all,
  python3-setuptools,
- python3-clint (>= 0.3.6),
- python3-pygit2 (>= 0.23.0),
+ python3-clint,
+ python3-pygit2,
  python3-sh (>= 1.11)
 Standards-Version: 3.9.8
 X-Python3-Version: >= 3.2
