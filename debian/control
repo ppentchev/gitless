@@ -20,7 +20,11 @@ Vcs-Browser: https://github.com/ppentchev/gitless/tree/debian
 
 Package: gitless
 Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends}, git
+Depends:
+ ${python3:Depends},
+ ${misc:Depends},
+ git,
+ python3-pkg-resources
 Multi-Arch: foreign
 Description: version control system on top of Git
  Gitless is an experimental version control system built on top of Git.
