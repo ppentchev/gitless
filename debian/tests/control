@@ -1,0 +1,3 @@
+Test-Command: env GITLESS='/usr/bin/gl' ./debian/run-simple-test.sh
+Depends: @, git
+Restrictions: allow-stderr
