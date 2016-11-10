@@ -1,0 +1,16 @@
+Description: Use sensible-pager as a default pager.
+Forwarded: not-needed
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2016-11-10
+
+--- a/gitless/cli/helpers.py
++++ b/gitless/cli/helpers.py
+@@ -72,7 +72,7 @@
+     pager = repo.config['core.pager']
+   except KeyError:
+     pass
+-  cmd = [pager, fp] if pager else ['less', '-r', '-f', fp]
++  cmd = [pager, fp] if pager else ['sensible-pager', fp]
+   subprocess.call(cmd, stdin=sys.stdin, stdout=sys.stdout)
+ 
+ 
