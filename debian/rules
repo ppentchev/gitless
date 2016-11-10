@@ -7,10 +7,9 @@ export PYBUILD_NAME=gitless
 
 override_dh_auto_clean:
 	dh_auto_clean
-	rm -f gl
 	rm -rf .eggs
 	rm -rf gitless.egg-info
 
 override_dh_auto_test:
 	'${CURDIR}/debian/run-simple-test.sh'
-	[ -n '${NO_GL_UPSTREAM_TEST}' ] || '${CURDIR}/debian/run-upstream-test.sh'
+	[ -n '${NO_GL_UPSTREAM_TEST}' ] || env GITLESS=./gl '${CURDIR}/debian/run-upstream-test.sh'
