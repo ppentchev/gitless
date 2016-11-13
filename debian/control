@@ -28,11 +28,11 @@ Depends:
 Multi-Arch: foreign
 Description: version control system on top of Git
  Gitless is an experimental version control system built on top of Git.
- Many people complain that Git is hard to use.  We think the problem lies
- deeper than the user interface, in the concepts underlying Git.
- Gitless is an experiment to see what happens if you put a simple veneer on
- an app that changes the underlying concepts.  Because Gitless is
- implemented on top of Git (could be considered what Git pros call
- a "porcelain" of Git), you can always fall back on Git. And of course
- your coworkers you share a repo with need never know that you're not
- a Git aficionado.
+ Many people complain that Git is hard to use.  The Gitless authors think
+ the problem lies deeper than the user interface, in the concepts
+ underlying Git.  Gitless is an experiment to see what happens if
+ a simple veneer is put on an app that changes the underlying concepts.
+ Because Gitless is implemented on top of Git (could be considered what
+ Git pros call a "porcelain" of Git), you can always fall back on Git.
+ And of course your coworkers you share a repo with need never know that
+ you're not a Git aficionado.
