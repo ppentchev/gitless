@@ -1,0 +1,65 @@
+Description: Correct some typographical errors.
+Forwarded: not-yet
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2016-11-16
+
+--- a/README.md
++++ b/README.md
+@@ -56,7 +56,7 @@
+ To install from source you need to have Python (2.7, 3.2+ or pypy)
+ installed.
+ 
+-Additionaly, you need to [install pygit2](
++Additionally, you need to [install pygit2](
+ http://www.pygit2.org/install.html "pygit2 install").
+ 
+ Then, [download the source code tarball](http://gitless.com "Gitless's website")
+@@ -71,7 +71,7 @@
+ Gitless via the Python Package Index. To do this, you need to have
+ Python (2.7, 3.2+ or pypy) installed.
+ 
+-Additionaly, you need to [install pygit2](
++Additionally, you need to [install pygit2](
+ http://www.pygit2.org/install.html "pygit2 install").
+ 
+ Then, just do:
+--- a/gitless/core.py
++++ b/gitless/core.py
+@@ -231,7 +231,7 @@
+ 
+     Args:
+       dst_b: the destination branch.
+-      move_over: if True, then uncommited changes made in the current branch are
++      move_over: if True, then uncommitted changes made in the current branch are
+         moved to the destination branch (defaults to False).
+     """
+     if dst_b.is_current:
+@@ -807,7 +807,7 @@
+       git('update-index', '--no-assume-unchanged', path,
+           _cwd=self.gl_repo.root)
+     else:
+-      raise GlError('File {0} in unkown status {1}'.format(path, git_st))
++      raise GlError('File {0} in unknown status {1}'.format(path, git_st))
+ 
+   def untrack_file(self, path):
+     """Stop tracking changes to path."""
+@@ -837,7 +837,7 @@
+       git('update-index', '--assume-unchanged', path,
+           _cwd=self.gl_repo.root)
+     else:
+-      raise GlError('File {0} in unkown status {1}'.format(path, git_st))
++      raise GlError('File {0} in unknown status {1}'.format(path, git_st))
+ 
+   def resolve_file(self, path):
+     """Mark the given path as resolved."""
+--- a/gitless/cli/commit_dialog.py
++++ b/gitless/cli/commit_dialog.py
+@@ -53,7 +53,7 @@
+   pprint.msg('the commit.', stream=cf.write)
+   pprint.blank(stream=cf.write)
+   pprint.msg(
+-      'These are the files whose changes will be commited:', stream=cf.write)
++      'These are the files whose changes will be committed:', stream=cf.write)
+   for f in files:
+     pprint.item(f, stream=cf.write)
+   pprint.sep(stream=cf.write)
