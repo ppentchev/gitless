@@ -1,0 +1,457 @@
+.\" Copyright (c) 2016  Peter Pentchev
+.\" All rights reserved.
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License
+.\" as published by the Free Software Foundation; either version 2
+.\" of the License, or (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.Dd November 13, 2016
+.Dt GL 1
+.Os
+.Sh NAME
+.Nm gl
+.Nd a version control system on top of Git
+.Sh SYNOPSIS
+.\"
+.\" --- track
+.Nm
+.Cm track
+.Ar file...
+.\"
+.Nm
+.Cm track
+.Fl h
+.\"
+.\" --- untrack
+.Pp
+.Nm
+.Cm untrack
+.Ar file...
+.Nm
+.Cm untrack
+.Fl h
+.\"
+.\" --- status
+.Pp
+.Nm
+.Cm status
+.Ar path...
+.\"
+.Nm
+.Cm status
+.Fl h
+.\"
+.\" --- diff
+.Pp
+.Nm
+.Cm diff
+.Ar file...
+.\"
+.Nm
+.Cm diff
+.Fl e
+.Ar file...
+.\"
+.Nm
+.Cm diff
+.Fl i
+.Ar file...
+.\"
+.Nm
+.Cm diff
+.Fl o
+.Ar file...
+.\"
+.Nm
+.Cm diff
+.Fl h
+.\"
+.\" --- commit
+.Pp
+.Nm
+.Cm commit
+.Op Fl m Ar message
+.Op Fl p
+.Ar file...
+.\"
+.Nm
+.Cm commit
+.Op Fl m Ar message
+.Op Fl p
+.Fl e
+.Ar file...
+.\"
+.Nm
+.Cm commit
+.Op Fl m Ar message
+.Op Fl p
+.Fl i
+.Ar file...
+.\"
+.Nm
+.Cm commit
+.Op Fl m Ar message
+.Op Fl p
+.Fl o
+.Ar file...
+.\"
+.Nm
+.Cm commit
+.Fl h
+.\"
+.\" --- branch
+.Pp
+.Nm
+.Cm branch
+.Op Fl r
+.Op Fl v
+.\"
+.Nm
+.Cm branch
+.Op Fl v
+.Op Fl dp Ar point
+.Fl c
+.Ar branch...
+.\"
+.Nm
+.Cm branch
+.Op Fl v
+.Fl d
+.Ar branch...
+.\"
+.Nm
+.Cm branch
+.Fl sh
+.Ar commit_id
+.\"
+.Nm
+.Cm branch
+.Fl su
+.Ar branch
+.\"
+.Nm
+.Cm branch
+.Fl uu
+.\"
+.Nm
+.Cm branch
+.Fl h
+.\"
+.\" --- tag
+.Pp
+.Nm
+.Cm tag
+.Op Fl r
+.\"
+.Nm
+.Cm tag
+.Op Fl ci Ar commit_id
+.Fl c
+.Ar tag...
+.\"
+.Nm
+.Cm tag
+.Fl d
+.Ar tag...
+.\"
+.Nm
+.Cm tag
+.Fl h
+.\"
+.\" --- checkout
+.Pp
+.Nm
+.Cm checkout
+.Op Fl cp Ar commit_id
+.Ar files...
+.\"
+.Nm
+.Cm checkout
+.Fl h
+.\"
+.\" --- merge
+.Pp
+.Nm
+.Cm merge
+.Ar src
+.\"
+.Nm
+.Cm merge
+.Fl a
+.\"
+.Nm
+.Cm merge
+.Fl h
+.\"
+.\" --- resolve
+.Pp
+.Nm
+.Cm resolve
+.Ar file...
+.\"
+.Nm
+.Cm resolve
+.Fl h
+.\"
+.\" --- fuse
+.Pp
+.Nm
+.Cm fuse
+.Op Fl ip Ar commit_id
+.Ar src
+.\"
+.Nm
+.Cm fuse
+.Op Fl ip Ar commit_id
+.Fl e Ar commit_id...
+.Ar src
+.\"
+.Nm
+.Cm fuse
+.Op Fl ip Ar commit_id
+.Fl o Ar commit_id...
+.Ar src
+.\"
+.Nm
+.Cm fuse
+.Fl a
+.\"
+.Nm
+.Cm fuse
+.Fl h
+.\"
+.\" --- remote
+.Pp
+.Nm
+.Cm remote
+.\"
+.Nm
+.Cm remote
+.Fl c Ar remote
+remote_url
+.\"
+.Nm
+.Cm remote
+.Fl d Ar remote
+.\"
+.Nm
+.Cm remote
+.Fl h
+.\"
+.\" --- publish
+.Pp
+.Nm
+.Cm publish
+.Ar dst_branch
+.\"
+.Nm
+.Cm publish
+.Fl h
+.\"
+.\" --- switch
+.Pp
+.Nm
+.Cm switch
+.Op Fl mo
+.Ar branch
+.\"
+.Nm
+.Cm switch
+.Fl h
+.\"
+.\" --- init
+.Pp
+.Nm
+.Cm init
+.Op Ar repo
+.\"
+.Nm
+.Cm init
+.Fl h
+.\"
+.\" --- history
+.Pp
+.Nm
+.Cm history
+.Op Fl c
+.Op Fl v
+.Op Fl b Ar branch_name
+.Op Fl l Ar limit
+.\"
+.Nm
+.Cm history
+.Fl h
+.\"
+.\" --- help and version
+.Pp
+.Nm
+.Fl h
+.Nm
+.Fl -version
+.Sh DESCRIPTION
+The
+.Nm
+utility is a version control system built on top of Git.
+.Pp
+The
+.Nm
+utility accepts the following commands:
+.Bl -tag -width indent
+.It Cm track
+Start tracking changes to files.
+.It Cm untrack
+Stop tracking changes to files.
+.It Cm status
+Show the status of the repository.
+.It Cm diff
+Show the status of the repository.
+.It Cm commit
+Save changes to the local repository.
+By default all tracked modified files are committed.
+To customize the set of files to be committed use the only, exclude, and
+include flags.
+.Bl -tag -width indent
+.It Fl m
+Specify the commit message.
+.It Fl p , Fl -partial
+Interactively select segments of files to commit.
+.El
+.It Cm branch
+List, create, edit, or delete branches.
+.Bl -tag -width indent
+.It Fl c , Fl -create
+Create the specified branch(es).
+.It Fl d , Fl -delete
+Delete the specified branch(es).
+.It Fl dp , Fl divergent-point
+The commit from which to
+.Dq branch out .
+.It Fl sh , Fl -set-head
+Set the head of the current branch.
+.It Fl su , Fl -set-upstream
+Set the upstream branch of the current branch.
+.It Fl uu , Fl -unset-upstream
+Unset the upstream branch of the current branch.
+.It Fl v
+Be verbose, output the head of each branch.
+.El
+.It Cm tag
+List, create, or delete tags.
+.Bl -tag -width indent
+.It Fl c , Fl -create
+Create tag(s).
+.It Fl ci , Fl -commit
+Specify the commit to tag.
+.It Fl d , Fl -delete
+Delete tag(s).
+.It Fl r , Fl -remote
+List remote tags in addition to local ones.
+.El
+.It Cm checkout
+Checkout the committed versions of the specified files.
+.Bl -tag -width indent
+.It Fl cp , Fl -commit-point
+The commit point to checkout the files as.
+.El
+.It Cm merge
+Merge the divergent changes of one branch onto another.
+.Bl -tag -width indent
+.It Fl a
+Abort the merge in progress.
+.El
+.It Cm resolve
+Mark files with conflicts as resolved.
+.It Cm fuse
+Fuse the divergent changes of a branch onto the current branch.
+By default all divergent changes from the given source branch are fused.
+To customize the set of commmits to fuse use the only and exclude flags.
+.Bl -tag -width indent
+.It Fl a , Fl -abort
+Abort the fuse in progress.
+.It Fl ip , Fl -insertion-point
+The divergent changes will be inserted after the specified commit.
+.El
+.It Cm remote
+List, create, edit, or delete remotes.
+.Bl -tag -width indent
+.It Fl c , Fl -create
+Create a remote.
+.It Fl d , Fl -delete
+Delete a remote.
+.El
+.It Cm publish
+Publish commits upstream.
+.It Cm switch
+Switch branches.
+.Bl -tag -width indent
+.It Fl mo , Fl -move-over
+Move the uncommitted changes made to the current branch to
+the destination branch.
+.El
+.It Cm init
+Create an empty Gitless repository or create one from an existing
+remote repository.
+.It Cm history
+Show the commit history.
+.Bl -tag -width indent
+.It Fl b , Fl -branch
+The branch to show the history of.
+.It Fl c , Fl -compact
+Output the history in a compact format.
+.It Fl l , Fl -limit
+Limit the number of commits displayed.
+.It Fl v , Fl -verbose
+Be verbose, output the diffs of the commits.
+.El
+.El
+.Sh COMMON OPTIONS
+The following options have a similar meaning for various commands:
+.Bl -tag -width indent
+.It Fl e , Fl -exclude
+Exclude the specified files; the files must be tracked and modified.
+.It Fl h , Fl -help
+Display a help message.
+.It Fl i , Fl -include
+Include the specified files; the files must be untracked.
+.It Fl o , Fl -only
+Use only the specified files; the files must be tracked and modified.
+.El
+.Sh ENVIRONMENT
+The
+.Nm
+utility makes use of the following environment variables, if specified:
+.Bl -tag -width indent
+.It Ev EDITOR
+Specify the editor to use for composing commit messages; default:
+.Pa vim .
+.El
+.Sh FILES
+The operation of the
+.Nm
+utility is influenced by the same configuration files that
+.Xr git 1
+uses; see the
+.Dq FILES
+section of the
+.Xr git-config 1
+documentation.
+.Sh EXAMPLES
+Please see the Gitless website at
+.Pa http://gitless.com/ .
+.Sh DIAGNOSTICS
+.Ex -std
+.Sh SEE ALSO
+.Xr git 1
+.Sh AUTHORS
+.An Santiago Perez De Rosso
+.Aq sperezde@csail.mit.edu
+.Pp
+This manual page was written for the Debian project by
+.An Peter Pentchev
+.Aq roam@ringlet.net
