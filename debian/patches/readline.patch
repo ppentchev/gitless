@@ -1,0 +1,16 @@
+Description: Fix an infinite readline() loop.
+Forwarded: not-yet
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2016-11-13
+
+--- a/gitless/cli/commit_dialog.py
++++ b/gitless/cli/commit_dialog.py
+@@ -82,7 +82,7 @@
+   sep = pprint.SEP + '\n'
+   msg = ''
+   l = cf.readline()
+-  while l != sep:
++  while l != sep and len(l) > 0:
+     msg += l
+     l = cf.readline()
+   # We reached the separator, this marks the end of the commit msg
