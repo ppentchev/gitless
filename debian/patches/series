@@ -1,4 +1,4 @@
 python3.patch
-sensible-pager.patch
+pager.patch
 readline.patch
 typos.patch
