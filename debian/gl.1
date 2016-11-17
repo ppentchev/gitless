@@ -388,6 +388,18 @@ utility makes use of the following environment variables, if specified:
 .It Ev EDITOR
 Specify the editor to use for composing commit messages; default:
 .Pa vim .
+.It Ev PAGER
+Specify the pager to be used if the
+.Va core.pager
+setting is not specified in the Git configuration; default:
+.Dq Cm less Fl r Fl f .
+If the pager to be executed is actually
+.Xr less 1 ,
+the
+.Fl r
+and
+.Fl f
+flags are appended to its arguments.
 .El
 .Sh FILES
 The operation of the
