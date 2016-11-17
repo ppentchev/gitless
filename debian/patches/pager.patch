@@ -9,13 +9,21 @@ Last-Update: 2016-11-10
 
 --- a/gitless/cli/helpers.py
 +++ b/gitless/cli/helpers.py
-@@ -72,7 +72,10 @@
+@@ -9,6 +9,7 @@
+ 
+ import argparse
+ import os
++import shlex
+ import subprocess
+ import sys
+ 
+@@ -72,7 +73,10 @@
      pager = repo.config['core.pager']
    except KeyError:
      pass
 -  cmd = [pager, fp] if pager else ['less', '-r', '-f', fp]
 +  pager = pager or os.environ.get('PAGER', None) or 'less'
-+  if os.path.basename(pager.split(' ')[0]) == 'less':
++  if os.path.basename(shlex.split(pager)[0]) == 'less':
 +    pager = pager + ' -r -f'
 +  cmd = ['sh', '-c', pager + ' ' + fp]
    subprocess.call(cmd, stdin=sys.stdin, stdout=sys.stdout)
