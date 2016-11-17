@@ -51,22 +51,9 @@
 .Pp
 .Nm
 .Cm diff
-.Ar file...
-.\"
-.Nm
-.Cm diff
-.Fl e
-.Ar file...
-.\"
-.Nm
-.Cm diff
-.Fl i
-.Ar file...
-.\"
-.Nm
-.Cm diff
-.Fl o
-.Ar file...
+.Op Fl e Ar file...
+.Op Fl i Ar file...
+.Op Fl o Ar file...
 .\"
 .Nm
 .Cm diff
@@ -78,28 +65,9 @@
 .Cm commit
 .Op Fl m Ar message
 .Op Fl p
-.Ar file...
-.\"
-.Nm
-.Cm commit
-.Op Fl m Ar message
-.Op Fl p
-.Fl e
-.Ar file...
-.\"
-.Nm
-.Cm commit
-.Op Fl m Ar message
-.Op Fl p
-.Fl i
-.Ar file...
-.\"
-.Nm
-.Cm commit
-.Op Fl m Ar message
-.Op Fl p
-.Fl o
-.Ar file...
+.Op Fl e Ar file...
+.Op Fl i Ar file...
+.Op Fl o Ar file...
 .\"
 .Nm
 .Cm commit
@@ -204,18 +172,8 @@
 .Nm
 .Cm fuse
 .Op Fl ip Ar commit_id
-.Ar src
-.\"
-.Nm
-.Cm fuse
-.Op Fl ip Ar commit_id
-.Fl e Ar commit_id...
-.Ar src
-.\"
-.Nm
-.Cm fuse
-.Op Fl ip Ar commit_id
-.Fl o Ar commit_id...
+.Op Fl e Ar commit_id...
+.Op Fl o Ar commit_id...
 .Ar src
 .\"
 .Nm
