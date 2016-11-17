@@ -25,6 +25,7 @@ Depends:
  ${misc:Depends},
  git,
  python3-pkg-resources
+Recommends: less
 Multi-Arch: foreign
 Description: version control system on top of Git
  Gitless is an experimental version control system built on top of Git.
