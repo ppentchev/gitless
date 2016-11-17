@@ -54,7 +54,7 @@ Last-Update: 2016-11-16
      """Mark the given path as resolved."""
 --- a/gitless/cli/commit_dialog.py
 +++ b/gitless/cli/commit_dialog.py
-@@ -53,7 +53,7 @@
+@@ -54,7 +54,7 @@
    pprint.msg('the commit.', stream=cf.write)
    pprint.blank(stream=cf.write)
    pprint.msg(

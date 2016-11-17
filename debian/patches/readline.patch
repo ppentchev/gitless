@@ -5,7 +5,7 @@ Last-Update: 2016-11-13
 
 --- a/gitless/cli/commit_dialog.py
 +++ b/gitless/cli/commit_dialog.py
-@@ -82,7 +82,7 @@
+@@ -86,7 +86,7 @@
    sep = pprint.SEP + '\n'
    msg = ''
    l = cf.readline()

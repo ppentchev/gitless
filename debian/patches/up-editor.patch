@@ -1,0 +1,30 @@
+Description: Treat EDITOR as a command with arguments
+Origin: upstream; https://github.com/sdg-mit/gitless/commit/f3da4093c31ea49d83d0f890df106f89bc0dd4af
+Author: Rainer Müller <raimue@codingfarm.de>
+Last-Update: 2016-11-17
+
+diff --git a/gitless/cli/commit_dialog.py b/gitless/cli/commit_dialog.py
+index ca8baa5..8bde875 100644
+--- a/gitless/cli/commit_dialog.py
++++ b/gitless/cli/commit_dialog.py
+@@ -12,6 +12,7 @@ from locale import getpreferredencoding
+ import os
+ import subprocess
+ import sys
++import shlex
+ 
+ 
+ from . import pprint
+@@ -68,8 +69,11 @@ def _launch_editor(fp, repo):
+   except KeyError:
+     editor = os.environ['EDITOR'] if 'EDITOR' in os.environ else 'vim'
+ 
++  cmd = shlex.split(editor)
++  cmd.append(fp)
++
+   try:
+-    ret = subprocess.call([editor, fp])
++    ret = subprocess.call(cmd)
+     if ret != 0:
+       pprint.err('Call to editor {0} failed'.format(editor))
+   except OSError:

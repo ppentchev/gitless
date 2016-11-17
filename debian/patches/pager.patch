@@ -1,31 +1,26 @@
 Description: Improve the invocation of the pager.
  Also check for the PAGER environment variable.
- Run the user-specified pager command through the shell since it may contain
- arguments, not consist solely of the name of an executable command.
  Add the -f and -r arguments if the user-specified pager is "less", too.
 Forwarded: not-yet
 Author: Peter Pentchev <roam@ringlet.net>
-Last-Update: 2016-11-10
+Last-Update: 2016-11-17
 
 --- a/gitless/cli/helpers.py
 +++ b/gitless/cli/helpers.py
-@@ -9,6 +9,7 @@
- 
- import argparse
- import os
-+import shlex
- import subprocess
- import sys
- 
-@@ -72,7 +73,10 @@
+@@ -73,11 +73,11 @@
      pager = repo.config['core.pager']
    except KeyError:
      pass
--  cmd = [pager, fp] if pager else ['less', '-r', '-f', fp]
+-  if pager:
+-    cmd = shlex.split(pager)
+-    cmd.append(fp)
+-  else:
+-    cmd = ['less', '-r', '-f', fp]
 +  pager = pager or os.environ.get('PAGER', None) or 'less'
-+  if os.path.basename(shlex.split(pager)[0]) == 'less':
-+    pager = pager + ' -r -f'
-+  cmd = ['sh', '-c', pager + ' ' + fp]
++  cmd = shlex.split(pager)
++  if os.path.basename(cmd[0]) == 'less':
++    cmd.extend(['-r', '-f'])
++  cmd.append(fp)
    subprocess.call(cmd, stdin=sys.stdin, stdout=sys.stdout)
  
  
