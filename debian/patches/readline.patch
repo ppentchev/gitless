@@ -1,5 +1,5 @@
 Description: Fix an infinite readline() loop.
-Forwarded: not-yet
+Forwarded: https://github.com/sdg-mit/gitless/pull/101
 Author: Peter Pentchev <roam@ringlet.net>
 Last-Update: 2016-11-13
 

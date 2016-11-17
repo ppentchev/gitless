@@ -1,7 +1,7 @@
 Description: Improve the invocation of the pager.
  Also check for the PAGER environment variable.
  Add the -f and -r arguments if the user-specified pager is "less", too.
-Forwarded: not-yet
+Forwarded: https://github.com/sdg-mit/gitless/pull/100
 Author: Peter Pentchev <roam@ringlet.net>
 Last-Update: 2016-11-17
 
