@@ -17,5 +17,5 @@ export PYTHON3="$(py3versions -d)"
 dir="$(mktemp -d -t gitless-test.XXXXXX)"
 trap "rm -rf -- '$dir'" EXIT HUP INT QUIT TERM
 
-echo "Using directory $$dir"
-./debian/test-gl-simple "$$dir"
+echo "Using directory $dir"
+./debian/test-gl-simple "$dir"
