@@ -1,9 +1,12 @@
-gitless (0.8.4-2) UNRELEASED; urgency=medium
+gitless (0.8.5-1) UNRELEASED; urgency=medium
 
   * Declare compliance with Debian Policy 4.1.3 and drop the implied
     "Testsuite: autopkgtest" source control field.
   * Add the year 2018 to my debian/* copyright notice.
   * Add "Rules-Requires-Root: no" to the source control stanza.
+  * New upstream version:
+    - drop most of the patches, either integrated upstream or taken from
+      upstream in the first place
 
  -- Peter Pentchev <roam@ringlet.net>  Mon, 22 Jan 2018 11:39:02 +0200
 
