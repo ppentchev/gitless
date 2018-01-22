@@ -11,12 +11,11 @@ Build-Depends:
  python3-clint,
  python3-pygit2,
  python3-sh (>= 1.11)
-Standards-Version: 3.9.8
+Standards-Version: 4.1.3
 X-Python3-Version: >= 3.2
 Homepage: http://gitless.com/
 Vcs-Git: https://github.com/ppentchev/gitless.git -b debian
 Vcs-Browser: https://github.com/ppentchev/gitless/tree/debian
-Testsuite: autopkgtest
 
 Package: gitless
 Architecture: all

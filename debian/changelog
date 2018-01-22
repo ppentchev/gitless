@@ -1,3 +1,10 @@
+gitless (0.8.4-2) UNRELEASED; urgency=medium
+
+  * Declare compliance with Debian Policy 4.1.3 and drop the implied
+    "Testsuite: autopkgtest" source control field.
+
+ -- Peter Pentchev <roam@ringlet.net>  Mon, 22 Jan 2018 11:39:02 +0200
+
 gitless (0.8.4-1) unstable; urgency=low
 
   * Initial release.  Closes: #839644
