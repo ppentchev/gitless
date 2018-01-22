@@ -12,6 +12,7 @@ from locale import getpreferredencoding
 import os
 import subprocess
 import sys
+import shlex
 
 
 from . import pprint
@@ -53,7 +54,7 @@ def show(files, repo):
   pprint.msg('the commit.', stream=cf.write)
   pprint.blank(stream=cf.write)
   pprint.msg(
-      'These are the files whose changes will be commited:', stream=cf.write)
+      'These are the files whose changes will be committed:', stream=cf.write)
   for f in files:
     pprint.item(f, stream=cf.write)
   pprint.sep(stream=cf.write)
@@ -68,8 +69,11 @@ def _launch_editor(fp, repo):
   except KeyError:
     editor = os.environ['EDITOR'] if 'EDITOR' in os.environ else 'vim'
 
+  cmd = shlex.split(editor)
+  cmd.append(fp)
+
   try:
-    ret = subprocess.call([editor, fp])
+    ret = subprocess.call(cmd)
     if ret != 0:
       pprint.err('Call to editor {0} failed'.format(editor))
   except OSError:
@@ -82,7 +86,7 @@ def _extract_msg(repo):
   sep = pprint.SEP + '\n'
   msg = ''
   l = cf.readline()
-  while l != sep:
+  while l != sep and len(l) > 0:
     msg += l
     l = cf.readline()
   # We reached the separator, this marks the end of the commit msg

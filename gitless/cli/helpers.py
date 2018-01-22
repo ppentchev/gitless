@@ -11,6 +11,8 @@ import argparse
 import os
 import subprocess
 import sys
+import shlex
+import shutil
 
 from gitless import core
 
@@ -67,31 +69,71 @@ def get_branch_or_use_upstream(branch_name, arg, repo):
 
 
 def page(fp, repo):
-  pager = ''
+  if not sys.stdout.isatty():  # we are being piped or redirected
+    if sys.platform != 'win32':
+      # Prevent Python from throwing exceptions on SIGPIPE
+      from signal import signal, SIGPIPE, SIG_DFL
+      signal(SIGPIPE, SIG_DFL)
+    # memory-friendly way to output contents of file to stdout
+    with open(fp, 'r') as f:
+      shutil.copyfileobj(f, sys.stdout)
+    return
+
+  # On Windows, we need to call 'more' through cmd.exe (with 'cmd'). The /C is
+  # so that the command window gets closed after 'more' finishes
+  default_pager = 'less' if sys.platform != 'win32' else 'cmd /C more'
   try:
     pager = repo.config['core.pager']
   except KeyError:
-    pass
-  cmd = [pager, fp] if pager else ['less', '-r', '-f', fp]
-  subprocess.call(cmd, stdin=sys.stdin, stdout=sys.stdout)
+    pager = '' # empty string will evaluate to False below
+  pager = pager or os.environ.get('PAGER', None) or default_pager
+  cmd = shlex.split(pager) # split into constituents
+  if os.path.basename(cmd[0]) == 'less':
+    cmd.extend(['-r', '-f']) # append arguments
+
+  cmd.append(fp) # add file name to page command
+  try:
+    ret = subprocess.call(cmd, stdin=sys.stdin, stdout=sys.stdout)
+    if ret != 0:
+      pprint.err('Call to pager {0} failed'.format(pager))
+  except OSError:
+    pprint.err('Couldn\'t launch pager {0}'.format(pager))
+    pprint.err_exp('change the value of git\'s core.pager setting')
 
 
 class PathProcessor(argparse.Action):
 
-  def __init__(self, option_strings, dest, repo=None, **kwargs):
-    self.root = repo.root if repo else ''
+  def __init__(
+      self, option_strings, dest, repo=None, skip_dir_test=None,
+      skip_dir_cb=None, **kwargs):
+    self.repo = repo
+    self.skip_dir_test = skip_dir_test
+    self.skip_dir_cb = skip_dir_cb
     super(PathProcessor, self).__init__(option_strings, dest, **kwargs)
 
   def __call__(self, parser, namespace, paths, option_string=None):
+    root = self.repo.root if self.repo else ''
+    repo_dir = self.repo.path[:-1] if self.repo else ''  # strip trailing /
     def process_paths():
       for path in paths:
-        path = os.path.normpath(path)
+        path = os.path.abspath(path)
         if os.path.isdir(path):
-          for curr_dir, _, fps in os.walk(path):
+          for curr_dir, dirs, fps in os.walk(path, topdown=True):
+            if curr_dir.startswith(repo_dir):
+              dirs[:] = []
+              continue
+            curr_dir_rel = os.path.relpath(curr_dir, root)
+            if (curr_dir_rel != "." and self.skip_dir_test and
+                self.skip_dir_test(curr_dir_rel)):
+              if self.skip_dir_cb:
+                self.skip_dir_cb(curr_dir_rel)
+              dirs[:] = []
+              continue
             for fp in fps:
-              yield os.path.relpath(os.path.join(curr_dir, fp), self.root)
+              yield os.path.join(curr_dir_rel, fp)
         else:
-          yield os.path.relpath(path, self.root)
+          if not path.startswith(repo_dir):
+            yield os.path.relpath(path, root)
 
     setattr(namespace, self.dest, process_paths())
 
@@ -138,12 +180,16 @@ def oei_fs(args, repo):
     # Tracked modified files
     ret = frozenset(
         f.fp for f in curr_b.status()
-        if f.type == core.GL_STATUS_TRACKED and f.modified)
-    ret = ret.difference(exclude)
-    ret = ret.union(include)
+        if f.type == core.GL_STATUS_TRACKED and f.modified) # using generator expression
+    # We get the files from status with forward slashes. On Windows, these
+    # won't match the paths provided by the user, which are normalized by
+    # PathProcessor
+    if sys.platform == 'win32':
+      ret = frozenset(p.replace('/', '\\') for p in ret)
+    ret -= exclude
+    ret |= include
 
-  ret = list(ret)
-  ret.sort()
+  ret = sorted(list(ret))
   return ret
 
 
@@ -158,13 +204,17 @@ def _oei_validate(only, exclude, include, curr_b):
   """
   if only and (exclude or include):
     pprint.err(
-        'You provided a list of filenames to be committed only but also '
-        'provided a list of files to be excluded or included')
+        'You provided a list of filenames to be committed only (-o) but also '
+        'provided a list of files to be excluded (-e) or included (-i)')
     return False
 
   err = []
 
   def validate(fps, check_fn, msg):
+    ''' fps: files
+        check_fn: lambda(file) -> boolean
+        msg: string-format of pre-defined constant string.
+    '''
     ret = True
     if not fps:
       return ret
@@ -173,12 +223,12 @@ def _oei_validate(only, exclude, include, curr_b):
         f = curr_b.status_file(fp)
       except KeyError:
         err.append('File {0} doesn\'t exist'.format(fp))
-        ret = False
-      else:
+        ret = False # set error flag, but keep assessing other files
+      else: # executed after "try", exception will be ignored here
         if not check_fn(f):
-          err.append(msg(fp))
+          err.append(msg(fp)) # dynamic string formatting
           ret = False
-      return ret
+    return ret
 
   only_valid = validate(
       only, lambda f: f.type == core.GL_STATUS_UNTRACKED or (

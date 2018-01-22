@@ -7,10 +7,15 @@
 
 from __future__ import unicode_literals
 
+import sys
 import argparse
 import traceback
 import pygit2
-from sh import ErrorReturnCode
+
+if sys.platform != 'win32':
+  from sh import ErrorReturnCode
+else:
+  from pbs import ErrorReturnCode
 
 from clint.textui import colored
 
@@ -29,7 +34,7 @@ ERRORS_FOUND = 1
 INTERNAL_ERROR = 3
 NOT_IN_GL_REPO = 4
 
-VERSION = '0.8.4'
+VERSION = '0.8.5'
 URL = 'http://gitless.com'
 
 
@@ -64,6 +69,10 @@ def main():
       gl_switch, gl_init, gl_history]
   for sub_cmd in sub_cmds:
     sub_cmd.parser(subparsers, repo)
+
+  if len(sys.argv) == 1:
+    parser.print_help()
+    return SUCCESS
 
   args = parser.parse_args()
   try:
