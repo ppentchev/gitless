@@ -1,7 +1,7 @@
 Source: gitless
 Section: devel
 Priority: optional
-Maintainer: Peter Pentchev <roam@ringlet.net>
+Maintainer: Peter Pentchev <roam@debian.org>
 Build-Depends:
  debhelper (>> 10),
  dh-python,
