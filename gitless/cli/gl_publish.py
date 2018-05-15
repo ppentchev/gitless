@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Gitless - a version control system built on top of Git.
-# Licensed under GNU GPL v2.
+# Gitless - a version control system built on top of Git
+# Licensed under MIT
 
 """gl publish - Publish commits upstream."""
 
@@ -22,6 +22,9 @@ def parser(subparsers, _):
 
 def main(args, repo):
   current_b = repo.current_branch
-  current_b.publish(helpers.get_branch_or_use_upstream(args.dst, 'dst', repo))
-  pprint.ok('Publish succeeded')
+  dst_b = helpers.get_branch_or_use_upstream(args.dst, 'dst', repo)
+  current_b.publish(dst_b)
+  pprint.ok(
+      'Publish of commits from branch {0} to branch {1} succeeded'.format(
+        current_b, dst_b))
   return True

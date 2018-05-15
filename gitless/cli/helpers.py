@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Gitless - a version control system built on top of Git.
-# Licensed under GNU GPL v2.
+# Gitless - a version control system built on top of Git
+# Licensed under MIT
 
 """Some helpers for commands."""
 
@@ -61,8 +61,6 @@ def get_branch_or_use_upstream(branch_name, arg, repo):
           'branch set'.format(arg))
 
     ret = current_b.upstream
-    pprint.warn(
-        'No {0} branch specified, using upstream branch {1}'.format(arg, ret))
   else:
     ret = get_branch(branch_name, repo)
   return ret
@@ -105,10 +103,11 @@ class PathProcessor(argparse.Action):
 
   def __init__(
       self, option_strings, dest, repo=None, skip_dir_test=None,
-      skip_dir_cb=None, **kwargs):
+      skip_dir_cb=None, recursive=True, **kwargs):
     self.repo = repo
     self.skip_dir_test = skip_dir_test
     self.skip_dir_cb = skip_dir_cb
+    self.recursive = recursive
     super(PathProcessor, self).__init__(option_strings, dest, **kwargs)
 
   def __call__(self, parser, namespace, paths, option_string=None):
@@ -117,7 +116,7 @@ class PathProcessor(argparse.Action):
     def process_paths():
       for path in paths:
         path = os.path.abspath(path)
-        if os.path.isdir(path):
+        if self.recursive and os.path.isdir(path):
           for curr_dir, dirs, fps in os.walk(path, topdown=True):
             if curr_dir.startswith(repo_dir):
               dirs[:] = []
@@ -134,6 +133,8 @@ class PathProcessor(argparse.Action):
         else:
           if not path.startswith(repo_dir):
             yield os.path.relpath(path, root)
+          else:
+            yield path
 
     setattr(namespace, self.dest, process_paths())
 
@@ -151,8 +152,8 @@ class CommitIdProcessor(argparse.Action):
 
 def oei_flags(subparsers, repo):
   subparsers.add_argument(
-      '-o', '--only', nargs='+',
-      help='use only files given (files must be tracked modified or untracked)',
+      'only', nargs='*',
+      help='use only files given (tracked modified or untracked)',
       action=PathProcessor, repo=repo, metavar='file')
   subparsers.add_argument(
       '-e', '--exclude', nargs='+',
@@ -204,7 +205,7 @@ def _oei_validate(only, exclude, include, curr_b):
   """
   if only and (exclude or include):
     pprint.err(
-        'You provided a list of filenames to be committed only (-o) but also '
+        'You provided a list of filenames to be committed but also '
         'provided a list of files to be excluded (-e) or included (-i)')
     return False
 

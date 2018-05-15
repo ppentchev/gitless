@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Gitless - a version control system built on top of Git.
-# Licensed under GNU GPL v2.
+# Gitless - a version control system built on top of Git
+# Licensed under MIT
 
 """gl commit - Record changes in the local repository."""
 
@@ -54,13 +54,7 @@ def main(args, repo):
   if args.p:
     partials = _do_partial_selection(commit_files, curr_b)
 
-  if not repo.config['user.name']:
-    pprint.err('Missing name for commit author')
-    pprint.err_exp('change the value of git\'s user.name setting')
-    return False
-  if not repo.config['user.email']:
-    pprint.err('Missing email for commit author')
-    pprint.err_exp('change the value of git\'s user.email setting')
+  if not _author_info_is_ok(repo):
     return False
 
   msg = args.m if args.m else commit_dialog.show(commit_files, repo)
@@ -71,7 +65,7 @@ def main(args, repo):
 
   _auto_track(commit_files, curr_b)
   ci = curr_b.create_commit(commit_files, msg, partials=partials)
-  pprint.ok('Commit succeeded')
+  pprint.ok('Commit on branch {0} succeeded'.format(repo.current_branch))
 
   pprint.blank()
   pprint.commit(ci)
@@ -82,6 +76,24 @@ def main(args, repo):
     _op_continue(curr_b.merge_continue, 'Merge')
 
   return True
+
+
+def _author_info_is_ok(repo):
+  def show_config_error(key):
+    pprint.err('Missing {0} for commit author'.format(key))
+    pprint.err_exp('change the value of git\'s user.{0} setting'.format(key))
+
+  def config_is_ok(key):
+    try:
+      if not repo.config['user.{0}'.format(key)]:
+        show_config_error(key)
+        return False
+    except KeyError:
+      show_config_error(key)
+      return False
+    return True
+
+  return config_is_ok('name') and config_is_ok('email')
 
 
 def _do_partial_selection(files, curr_b):
