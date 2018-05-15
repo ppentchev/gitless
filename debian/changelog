@@ -1,5 +1,5 @@
-gitless (0.8.6-1) UNRELEASED; urgency=medium
+gitless (0.8.6-1) unstable; urgency=low
 
   * Initial release.  Closes: #839644
 
- -- Peter Pentchev <roam@debian.org>  Tue, 15 May 2018 11:47:05 +0300
+ -- Peter Pentchev <roam@debian.org>  Wed, 16 May 2018 00:59:12 +0300
