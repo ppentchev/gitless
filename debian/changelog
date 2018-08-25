@@ -4,6 +4,8 @@ gitless (0.8.6-2) UNRELEASED; urgency=medium
     returning None instead of raising a KeyError when not in a Git
     repository.  Closes: #907146
   * Declare compliance with Debian Policy 4.2.0 with no changes.
+  * Change the "MIT" license name to "Expat" in the copyright file to
+    avoid ambiguity with the multiple versions of MIT-like licenses.
 
  -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 19:32:50 +0300
 

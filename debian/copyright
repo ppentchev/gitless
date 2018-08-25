@@ -2,17 +2,17 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: gitless
 Upstream-Contact: Santiago Perez de Rosso <sperezde@csail.mit.edu>
 Source: https://github.com/sdg-mit/gitless/
-License: MIT
+License: Expat
 
 Files: *
 Copyright: Copyright (c) 2013  Santiago Perez De Rosso
-License: MIT
+License: Expat
 
 Files: debian/*
 Copyright: Copyright (c) 2016, 2018  Peter Pentchev
-License: MIT
+License: Expat
 
-License: MIT
+License: Expat
  Copyright (c) 2018  Santiago Perez De Rosso
  .
  Permission is hereby granted, free of charge, to any person obtaining a copy
