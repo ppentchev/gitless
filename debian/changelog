@@ -1,4 +1,4 @@
-gitless (0.8.6-2) UNRELEASED; urgency=medium
+gitless (0.8.6-2) unstable; urgency=medium
 
   * Add the path-none patch to catch up with pygit2's new behavior of
     returning None instead of raising a KeyError when not in a Git
@@ -12,7 +12,7 @@ gitless (0.8.6-2) UNRELEASED; urgency=medium
   * Add a trivial autopkgtest running adequate on the binary package.
   * Use the B-D: debhelper-compat (= 11) mechanism.
 
- -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 19:32:50 +0300
+ -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 21:59:29 +0300
 
 gitless (0.8.6-1) unstable; urgency=low
 
