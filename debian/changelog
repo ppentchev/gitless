@@ -6,6 +6,9 @@ gitless (0.8.6-2) UNRELEASED; urgency=medium
   * Declare compliance with Debian Policy 4.2.0 with no changes.
   * Change the "MIT" license name to "Expat" in the copyright file to
     avoid ambiguity with the multiple versions of MIT-like licenses.
+  * Add the typos patch to correct two typographical errors in
+    the upstream source and also propagate the fix to the debian/gl.1
+    manual page.
 
  -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 19:32:50 +0300
 
