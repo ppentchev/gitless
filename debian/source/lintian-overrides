@@ -1,0 +1,3 @@
+# lintian does not fully understand the "debhelper-compat (= X)"
+# build-dependency
+gitless source: missing-build-dependency debhelper
