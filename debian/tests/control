@@ -5,3 +5,6 @@ Restrictions: allow-stderr
 Test-Command: env GITLESS='/usr/bin/gl' ./debian/run-upstream-test.sh
 Depends: @, dh-python, git, python3-setuptools
 Restrictions: allow-stderr
+
+Test-Command: adequate gitless
+Depends: @, adequate
