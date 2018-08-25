@@ -10,6 +10,7 @@ gitless (0.8.6-2) UNRELEASED; urgency=medium
     the upstream source and also propagate the fix to the debian/gl.1
     manual page.
   * Add a trivial autopkgtest running adequate on the binary package.
+  * Use the B-D: debhelper-compat (= 11) mechanism.
 
  -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 19:32:50 +0300
 
