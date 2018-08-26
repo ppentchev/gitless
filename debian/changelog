@@ -1,3 +1,9 @@
+gitless (0.8.6-3) UNRELEASED; urgency=medium
+
+  * Declare compliance with Debian Policy 4.2.1 with no changes.
+
+ -- Peter Pentchev <roam@debian.org>  Sun, 26 Aug 2018 14:09:51 +0300
+
 gitless (0.8.6-2) unstable; urgency=medium
 
   * Add the path-none patch to catch up with pygit2's new behavior of
