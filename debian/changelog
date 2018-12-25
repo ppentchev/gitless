@@ -3,6 +3,7 @@ gitless (0.8.6-3) UNRELEASED; urgency=medium
   * Declare compliance with Debian Policy 4.3.0 with no changes.
   * Drop the Lintian override related to B-D: debhelper-compat -
     Lintian 2.5.98 no longer emits that error.
+  * Bump the debhelper compatibility level to 12 with no changes.
 
  -- Peter Pentchev <roam@debian.org>  Sun, 26 Aug 2018 14:09:51 +0300
 
