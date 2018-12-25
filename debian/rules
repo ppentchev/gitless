@@ -15,3 +15,6 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	'${CURDIR}/debian/run-simple-test.sh'
 	[ -n '${NO_GL_UPSTREAM_TEST}' ] || env GITLESS=./gl '${CURDIR}/debian/run-upstream-test.sh'
 endif
+
+override_dh_missing:
+	dh_missing --fail-missing
