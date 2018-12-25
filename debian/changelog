@@ -1,6 +1,6 @@
 gitless (0.8.6-3) UNRELEASED; urgency=medium
 
-  * Declare compliance with Debian Policy 4.2.1 with no changes.
+  * Declare compliance with Debian Policy 4.3.0 with no changes.
   * Drop the Lintian override related to B-D: debhelper-compat -
     Lintian 2.5.98 no longer emits that error.
 
