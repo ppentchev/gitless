@@ -1,4 +1,4 @@
-gitless (0.8.6-3) UNRELEASED; urgency=medium
+gitless (0.8.6-3) unstable; urgency=medium
 
   * Declare compliance with Debian Policy 4.3.0 with no changes.
   * Drop the Lintian override related to B-D: debhelper-compat -
@@ -6,7 +6,7 @@ gitless (0.8.6-3) UNRELEASED; urgency=medium
   * Bump the debhelper compatibility level to 12 with no changes and
     run the dh_missing tool with the --fail-missing option.
 
- -- Peter Pentchev <roam@debian.org>  Sun, 26 Aug 2018 14:09:51 +0300
+ -- Peter Pentchev <roam@debian.org>  Wed, 26 Dec 2018 01:19:46 +0200
 
 gitless (0.8.6-2) unstable; urgency=medium
 
