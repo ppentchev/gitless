@@ -1,7 +1,8 @@
 Source: gitless
 Section: devel
 Priority: optional
-Maintainer: Peter Pentchev <roam@debian.org>
+Maintainer: Python Applications Packaging Team <python-apps-team@lists.alioth.debian.org>
+Uploaders: Peter Pentchev <roam@debian.org>
 Build-Depends:
  debhelper-compat (= 12),
  dh-python,
@@ -13,8 +14,8 @@ Build-Depends:
  python3-sh (>= 1.11)
 Standards-Version: 4.3.0
 Homepage: http://gitless.com/
-Vcs-Git: https://github.com/ppentchev/gitless.git -b debian
-Vcs-Browser: https://github.com/ppentchev/gitless/tree/debian
+Vcs-Git: https://salsa.debian.org/python-team/applications/gitless.git -b debian/master
+Vcs-Browser: https://salsa.debian.org/python-team/applications/gitless/tree/debian/master
 Rules-Requires-Root: no
 
 Package: gitless
